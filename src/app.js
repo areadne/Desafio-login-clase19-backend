@@ -3,7 +3,7 @@ import productRouter from "./routers/products.router.js";
 import cartRouter from "./routers/carts.router.js";
 import mongoose, { mongo } from "mongoose";
 import handlebars from "express-handlebars";
-import viewRouter from "./routers/view.router.js";
+// import viewRouter from "./routers/view.router.js";
 import MongoStore from 'connect-mongo'
 import session from "express-session";
 import sessionsRouter from "./routers/sessions.router.js"
@@ -37,7 +37,7 @@ app.use("/api/products", productRouter);
 
 app.use("/api/cart", cartRouter);
 
-app.use("/products", viewRouter);
+// app.use("/products", viewRouter);
 
 app.use("/api/sessions", sessionsRouter)
 

@@ -24,6 +24,7 @@ router.post("/logout", async (request, response) => {
     await managerUser.logoutSession(request, response)
 })
 
+//esta muestra la vista de productos
 router.get("/view", async (request, response) => {
     await managerUser.loginHandler(request, response)
   });
