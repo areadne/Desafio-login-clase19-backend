@@ -92,12 +92,13 @@ export class MongoDBProductManager {
       return;
     }
 
-    let id;
+    let internal_id;
 
-    id = readFile.length === 0 ? 1 : readFile[readFile.length - 1].id + 1;
+    internal_id = readFile.length === 0 ? 1 : readFile[readFile.length - 1].internal_id + 1;
+    console.log(internal_id)
 
     let newItemInDB = await productsModel.create({
-      id,
+      internal_id,
       title,
       description,
       price,
@@ -114,7 +115,7 @@ export class MongoDBProductManager {
   getProductById = async (id, response) => {
     let readFile = await this.readProductsDB();
 
-    let search = readFile.find((el) => el.id === id);
+    let search = readFile.find((el) => el.internal_id === id);
 
     search ? search : (search = "Not found");
 
@@ -137,7 +138,7 @@ export class MongoDBProductManager {
 
     let readFileToUpdate = await this.readProductsDB();
 
-    const itemFounded = readFileToUpdate.filter((item) => item.id === id);
+    const itemFounded = readFileToUpdate.filter((item) => item.internal_id === id);
 
     this.validateData(!itemFounded, "id not found");
 
@@ -146,7 +147,7 @@ export class MongoDBProductManager {
       const { _id } = document;
 
       const nuevoItem = {
-        id: id,
+        internal_id: id,
         title: title,
         description: description,
         price: price,
@@ -168,7 +169,7 @@ export class MongoDBProductManager {
 
     const readFile = await this.readProductsDB();
 
-    const itemToDelete = readFile.find((item) => item.id === id);
+    const itemToDelete = readFile.find((item) => item.internal_id === id);
 
     if (itemToDelete === undefined) {
       response

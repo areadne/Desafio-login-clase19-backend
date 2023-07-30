@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2"
 
 const productsCollection = "products";
 
 const productsSchema = new mongoose.Schema({
-  id: { type: Number, unique: true, required: true},
+  id: isValidObjectId,
+  internal_id: { type: Number, unique: true, required: true},
   title: { type: String, required: true},
   description: { type: String, required: true},
   price: { type: Number, required: true},

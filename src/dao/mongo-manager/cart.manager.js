@@ -25,7 +25,7 @@ export class cartManagerDB {
     const readProductsFile = await productsModel.find();
 
     const validateCid = readCartFile.find((item) => item.id === cid);
-    const validatePid = readProductsFile.find((item) => item.id === pid);
+    const validatePid = readProductsFile.find((item) => item.internal_id === pid);
 
     let validations = {
       validateCid: validateCid,
@@ -54,7 +54,7 @@ export class cartManagerDB {
     const readProductsFile = await productsModel.find();
 
     const validateCid = readCartFile.find((item) => item.id === cid);
-    const validatePid = readProductsFile.find((item) => item.id === pid);
+    const validatePid = readProductsFile.find((item) => item.internal_id === pid);
 
     if (validateCid === undefined || validatePid === undefined) {
       response.status(400).send("Cart or product id does not exist");

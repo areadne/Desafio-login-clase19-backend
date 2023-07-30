@@ -31,8 +31,8 @@
           <td>{{this.category}}</td>
           <td>{{this.status}}</td>
           <td>
-            <form method="POST" action="/api/cart/2/products/{{this.code}}">
-              <input type="hidden" name="productId" value="{{this.code}}" />
+            <form method="POST" action="/api/cart/1/products/{{this.internal_id}}">
+              <input type="hidden" name="productId" value="{{this.internal_id}}" />
               <button type="submit">Agregar</button>
             </form>
           </td>
