@@ -1,7 +1,6 @@
 import userModel from "../models/user.model.js";
 import productsModel from "../models/products.model.js";
 import { isValidPassword } from "../helpers/utils.js"
-import testModel from "../models/test.model.js";
 
 export class userManager {
   constructor() {}
@@ -73,9 +72,6 @@ export class userManager {
       {},
       { page, limit, lean: true }
     );
-
-    // const testing = await testModel.paginate({},{ page, limit, lean: true })
-    // console.log(testing);
 
     if (sort === 1) {
       const sortedDocsAsc = result.docs.sort((a, b) => a.price - b.price);
