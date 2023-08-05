@@ -39,12 +39,16 @@ router.get("/view", async (request, response) => {
 router.get("/github", passport.authenticate('github', { scope: ['user:email']}), async (request, response) => {
 });
 
-router.get('/githubcallback', 
+router.get("/githubcallback", 
     passport.authenticate('github', {failureRedirect: '/api/sessions/failRegister'}),
     async(request, response) => {
         request.session.user = request.user
         response.redirect("/api/sessions/view");
     }
 )
+
+router.get("/current", async(request, response) => {
+  await managerUser.currentUser(request, response)
+})
 
 export default router;

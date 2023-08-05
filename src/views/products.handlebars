@@ -1,6 +1,6 @@
 <div>
 
-  <div> Bienvenid@ {{users.user}}, Rol: {{users.role}} 
+  <div> Bienvenid@ {{users.user}}, Rol: {{users.role}}
     <form method="POST" action="/api/sessions/logout">
       <button type="submit">Logout</button>
     </form>
@@ -21,6 +21,7 @@
     </thead>
     <tbody>
       {{#each payload.docs}}
+        {{#with this}}
         <tr>
           <td>{{this.title}}</td>
           <td>{{this.description}}</td>
@@ -31,12 +32,13 @@
           <td>{{this.category}}</td>
           <td>{{this.status}}</td>
           <td>
-            <form method="POST" action="/api/cart/1/products/{{this.internal_id}}">
+            <form method="POST" action="/api/cart/{{../users.cart}}/products/{{this.internal_id}}">
               <input type="hidden" name="productId" value="{{this.internal_id}}" />
               <button type="submit">Agregar</button>
             </form>
           </td>
         </tr>
+        {{/with}}
       {{/each}}
     </tbody>
   </table>
