@@ -1,54 +1,30 @@
 import { Router } from "express";
-import { userManager } from "../dao/mongo-manager/users.manager.js";
 import passport from "passport";
+import {
+  loginSessionController,
+  logoutSessionController,
+  loginHandlerController,
+  currentUserController,
+  registerController,
+  failRegisterController,
+  loginController,
+  registryController,
+  githubCallbackController,
+  githubController,
+} from "../controllers/sessions.controller.js";
 
 const router = Router();
-const managerUser = new userManager();
 
-router.get("/registro", async (request, response) => {
-  response.render("registro");
-});
-
-router.post("/registro", passport.authenticate("register", {failureRedirect: "/api/sessions/failRegister",}),
-  async (request, response) => {
-    response.redirect("/api/sessions/login");
-  }
-);
-
-router.get("/failRegister", async (request, response) => {
-  response.send("el usuario registrado ya existe");
-});
-
-router.get("/login", async (request, response) => {
-  response.render("login");
-});
-
-router.post("/login", async (request, response) => {
-  await managerUser.loginSession(request, response);
-});
-
-router.post("/logout", async (request, response) => {
-  await managerUser.logoutSession(request, response);
-});
-
+router.get("/registro", registryController);
+router.post("/registro", passport.authenticate("register", {failureRedirect: "/api/sessions/failRegister",}), registerController);
+router.get("/failRegister", failRegisterController);
+router.get("/login", loginController);
+router.post("/login", loginSessionController);
+router.post("/logout", logoutSessionController);
 //esta muestra la vista de productos
-router.get("/view", async (request, response) => {
-  await managerUser.loginHandler(request, response);
-});
-
-router.get("/github", passport.authenticate('github', { scope: ['user:email']}), async (request, response) => {
-});
-
-router.get("/githubcallback", 
-    passport.authenticate('github', {failureRedirect: '/api/sessions/failRegister'}),
-    async(request, response) => {
-        request.session.user = request.user
-        response.redirect("/api/sessions/view");
-    }
-)
-
-router.get("/current", async(request, response) => {
-  await managerUser.currentUser(request, response)
-})
+router.get("/view", loginHandlerController);
+router.get("/github", passport.authenticate("github", { scope: ["user:email"] }), githubController);
+router.get("/githubcallback", passport.authenticate("github", {failureRedirect: "/api/sessions/failRegister",}), githubCallbackController);
+router.get("/current", currentUserController);
 
 export default router;
